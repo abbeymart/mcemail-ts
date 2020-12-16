@@ -1,0 +1,44 @@
+July 15, 2020
+
+Running Test: should send and return valid response for verification
+======================================================
+{
+  accepted: [ 'abbeya1@yahoo.com' ],
+  rejected: [],
+  envelopeTime: 305,
+  messageTime: 315,
+  messageSize: 1808,
+  response: '250 Ok 010101735499726b-f6c6733b-72fc-4868-99ea-bab1ec592757-000000',
+  envelope: { from: 'support@mconnect.biz', to: [ 'abbeya1@yahoo.com' ] },
+  messageId: '<72b35a95-db7f-f230-589e-e07a879fd5c9@mconnect.biz>'
+}
+Passed
+Passed
+Summary for Test: should send and return valid response for verification:
+Test Passed:  2
+Test Failed:  0
+Total Test:  2
+============================
+All Tests Summary Stats:
+============================
+Test Passed:  2
+Test Failed:  0
+Total Test:  2
+***** Test Completed *****
+
+*******************************
+Errors: running with ts-node:
+*******************************
+mc-config:  undefined
+Running Test: should send and return valid response for verification
+======================================================
+Cannot read property 'emails' of undefined
+=====================================
+TypeError: Cannot read property 'emails' of undefined
+    at Object.sendAuthEmail (C:\Users\abbey\mConnect\Apps\mc\mc-servers\mc-central-ts\packages\mc-mail\src\sendAuthEmail.t
+s:48:34)
+    at testFunc (C:\Users\abbey\mConnect\Apps\mc\mc-servers\mc-central-ts\packages\mc-mail\test\email.test.ts:27:52)
+    at Object.mcTest (C:\Users\abbey\mConnect\Apps\mc\mc-servers\mc-central-ts\packages\mc-test\src\mcTest.ts:135:19)
+    at C:\Users\abbey\mConnect\Apps\mc\mc-servers\mc-central-ts\packages\mc-mail\test\email.test.ts:24:11
+    at Object.<anonymous> (C:\Users\abbey\mConnect\Apps\mc\mc-servers\mc-central-ts\packages\mc-mail\test\email.test.ts:39
+:3)
