@@ -7,11 +7,8 @@
 import { isEmptyObject, validateEmailConfig } from "./helper";
 import * as nodemailer from "nodemailer";
 import { getResMessage, ResponseMessage } from "@mconnect/mcresponse";
-import { EmailRequestType, AuthEmailTemplate, EmailTemplateType, EmailConfigType } from "./types";
+import { EmailRequestType, EmailTemplateType, EmailConfigType } from "./types";
 import Mail from "nodemailer/lib/mailer";
-
-// types: email-template types (auth, trade/order, mpe, general etc.)
-type EmailTemp = AuthEmailTemplate | EmailTemplateType;
 
 class Email {
     protected emailUser: string;

@@ -5,4 +5,6 @@
  * @Description: mc-central-ts: email/messages handling module
  */
 
-export * from "./sendAuthEmail";
+export * from "./types"
+export * from "./helper"
+export * from "./sendAuthEmail"

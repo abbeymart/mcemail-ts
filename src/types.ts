@@ -15,21 +15,6 @@ export interface EmailConfigType {
     emailServer: string;
 }
 
-export interface AuthEmailProp {
-    name: string;
-    email?: string;
-    username?: string;
-    verifyLink?: string;
-    contactInfo: string;
-    urlLink?: string;
-    taskType?: string;
-    taskSubject?: string;
-    taskMessage?: string;
-    loginName?: string;
-}
-
-export type AuthEmailFunc = (props: AuthEmailProp) => string | Buffer | Readable | AttachmentLike | undefined;
-
 export type EmailSubjectFunc = (props: object) => string;
 
 export type EmailFunc = (props: object) => string | Buffer | Readable | AttachmentLike | undefined;
@@ -39,12 +24,6 @@ export interface EmailRequestType {
 
     fromEmail: string;
     toEmail: string;
-}
-
-export interface AuthEmailTemplate {
-    subject: EmailSubjectFunc;
-    text: AuthEmailFunc;
-    html?: AuthEmailFunc;
 }
 
 export interface EmailTemplateType {
