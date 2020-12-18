@@ -14,7 +14,7 @@ class Email {
     protected emailUser: string;
     protected emailPassword: string;
     protected emailPort: number;
-    protected emailServer: string;
+    protected serverUrl: string;
     protected request: EmailRequestType;
     protected template: EmailTemplateType
     protected transporter: Mail | undefined
@@ -24,7 +24,7 @@ class Email {
         this.emailUser = config.username
         this.emailPassword = config.password
         this.emailPort = config.port
-        this.emailServer = config.emailServer
+        this.serverUrl = config.serverUrl
         this.request = request
         this.template = template
         this.templateData = request.templateData
@@ -33,10 +33,10 @@ class Email {
     validateEmailConfig() {
         // validate email-server configuration
         const valRes = validateConfig({
-            username   : this.emailUser,
-            password   : this.emailPassword,
-            emailServer: this.emailServer,
-            port       : this.emailPort,
+            username : this.emailUser,
+            password : this.emailPassword,
+            serverUrl: this.serverUrl,
+            port     : this.emailPort,
         })
         if (valRes.code !== "success") {
             return valRes
@@ -59,7 +59,7 @@ class Email {
 
     activateMailServer() {
         this.transporter = nodemailer.createTransport({
-            host          : this.emailServer,
+            host          : this.serverUrl,
             port          : this.emailPort,
             secure        : true, // use TLS
             auth          : {
@@ -86,10 +86,13 @@ class Email {
 
     async sendEmail(): Promise<ResponseMessage> {
         try {
+            // validate send-email parameters / inputs
             this.validateEmailConfig()
             this.validateEmailRequestParams()
-            this.activateMailServer()
             this.validateMailServer()
+
+            // activate email-server
+            this.activateMailServer()
 
             // send email
             const result = await this.transporter?.sendMail({
@@ -100,7 +103,9 @@ class Email {
                 html   : this.template.html ? this.template.html(this.templateData) : ""  // html body
             });
             return getResMessage("success", {
-                message: "Verification email sent to your registered email, check and verify your email before login.",
+                message: this.request.requestName? this.request.successMessage ? `${this.request.requestName}: ${this.request.successMessage}` :
+                    `${this.request.requestName}: Requested Email sent to your registered email. Check you email for details.` :
+                    "Requested Email sent to your registered email. Check you email for details.",
                 value  : result,
             });
         } catch (e) {

@@ -16,7 +16,7 @@ export function isEmptyObject(val: object): boolean {
 }
 
 export function validateConfig(config: EmailConfigType): ResponseMessage {
-    if (isEmptyObject(config) || config.emailServer === "" || config.port === 0 || config.username === "" || config.password === "") {
+    if (isEmptyObject(config) || config.serverUrl === "" || config.port === 0 || config.username === "" || config.password === "") {
         return getResMessage("paramsError", {
             message: "email-configuration: user, password, server and port are required",
             value  : null,

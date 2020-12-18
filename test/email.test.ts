@@ -24,10 +24,10 @@ import { emailPass, emailServer, emailUser, emailPort } from "./config/emailConf
 import {verifySubject, verifyContentText, verifyContent} from "./templates";
 
 const serverConfig: EmailConfigType = {
-    username   : emailUser,
-    password   : emailPass,
-    emailServer: emailServer,
-    port       : Number(emailPort),
+    username : emailUser,
+    password : emailPass,
+    serverUrl: emailServer,
+    port     : Number(emailPort),
 };
 
 const requestInfo: EmailRequestType = {
