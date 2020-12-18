@@ -7,4 +7,4 @@
 
 export * from "./types"
 export * from "./helper"
-export * from "./sendAuthEmail"
+export * from "./sendEmail"

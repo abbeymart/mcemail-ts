@@ -6,8 +6,7 @@
  */
 
 import { getResMessage, ResponseMessage } from "@mconnect/mcresponse";
-import { EmailConfigType } from "./types";
-import { emailPass } from "../test/config/emailConfig";
+import { EmailConfigType, MessageObject } from "./types";
 
 export function isEmptyObject(val: object): boolean {
     if (Object.keys(val).length > 0 && Object.values(val).length > 0) {
@@ -16,23 +15,8 @@ export function isEmptyObject(val: object): boolean {
     return true;
 }
 
-interface MessageObject {
-    [key: string]: string;
-
-}
-
-export function getParamsMessage(msgObject: MessageObject, msgType = "unknown"): ResponseMessage {
-    let messages = "";
-    Object.entries(msgObject).forEach(([key, msg]) => {
-        messages = messages ? `${messages} | ${key} : ${msg}` : `${key} : ${msg}`;
-    });
-    return getResMessage(msgType, {
-        message: messages,
-    });
-}
-
-export function validateEmailConfig(config: EmailConfigType): ResponseMessage {
-    if (isEmptyObject(config) || config.emailServer === "" || config.emailPort === 0 || config.emailUser === "" || config.emailPassword === "") {
+export function validateConfig(config: EmailConfigType): ResponseMessage {
+    if (isEmptyObject(config) || config.emailServer === "" || config.port === 0 || config.username === "" || config.password === "") {
         return getResMessage("paramsError", {
             message: "email-configuration: user, password, server and port are required",
             value  : null,

@@ -5,7 +5,7 @@
  * @Description: mc-central-ts: payment email by order
  */
 
-import { mcLabels, mcConstants } from "../../../mc-locale/config";
+import { mcLabels, mcConstants } from "../config/emailConfig";
 import { utils } from "../../../mc-utils/src";
 import numFormat = require("numeral");
 
@@ -33,7 +33,7 @@ function formatNum(num) {
 
 function shortDesc(desc) {
     // set the short description for item.desc
-    return utils.shortString(desc, mcConstants.getShortDesc());
+    return utils.shortString(desc, mcConstants.SHORT_DESC);
 }
 
 function productName(itemId) {
