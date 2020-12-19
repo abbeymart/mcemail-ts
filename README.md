@@ -1,3 +1,3 @@
-# @mconnect/mcemail
+# @mconnect/mcmail
 
 - Send Email / Messages Package

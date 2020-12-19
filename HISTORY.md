@@ -2,7 +2,7 @@
 
 ## Version 0.2.0
 
-- Release date: Dec 18, 2020
+- Release date: Dec 20, 2020
 - Refactored, test, build and publish
 
 ## Version 0.1.0
