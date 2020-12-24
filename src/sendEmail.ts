@@ -7,27 +7,29 @@
 import { isEmptyObject, validateConfig } from "./helper";
 import * as nodemailer from "nodemailer";
 import { getResMessage, ResponseMessage } from "@mconnect/mcresponse";
-import { EmailRequestType, EmailTemplateType, EmailConfigType } from "./types";
-import Mail from "nodemailer/lib/mailer";
+import { EmailRequestType, EmailTemplateType, EmailConfigType, TemplateDataType } from "./types";
+import Mail = require("nodemailer/lib/mailer");
 
 class Email {
     protected emailUser: string;
     protected emailPassword: string;
     protected emailPort: number;
     protected serverUrl: string;
+    protected msgFrom: string;
     protected request: EmailRequestType;
-    protected template: EmailTemplateType
-    protected transporter: Mail | undefined
-    protected templateData: { [key: string]: string }
+    protected template: EmailTemplateType;
+    protected transporter: Mail | undefined;
+    protected templateData: TemplateDataType;
 
-    constructor(config: EmailConfigType, request: EmailRequestType, template: EmailTemplateType) {
+    constructor(config: EmailConfigType) {
         this.emailUser = config.username
         this.emailPassword = config.password
         this.emailPort = config.port
         this.serverUrl = config.serverUrl
-        this.request = request
-        this.template = template
-        this.templateData = request.templateData
+        this.msgFrom = config.msgFrom
+        this.request = {fromEmail: "", toEmail: "", successMessage: "", requestName: "", templateData: {}}
+        this.template = {text: ({})=> "", subject: ({})=> ""}
+        this.templateData = {}
     }
 
     validateEmailConfig() {
@@ -37,6 +39,7 @@ class Email {
             password : this.emailPassword,
             serverUrl: this.serverUrl,
             port     : this.emailPort,
+            msgFrom  : this.msgFrom,
         })
         if (valRes.code !== "success") {
             return valRes
@@ -45,7 +48,7 @@ class Email {
 
     validateEmailRequestParams() {
         // required email parameters validation
-        if (!this.request.fromEmail || !this.request.toEmail) {
+        if (!this.request.toEmail) {
             return getResMessage("paramError", {
                 message: "Request fromEmail and toEmail are required.",
             });
@@ -84,8 +87,11 @@ class Email {
         }
     }
 
-    async sendEmail(): Promise<ResponseMessage> {
+    async sendEmail(request: EmailRequestType, template: EmailTemplateType): Promise<ResponseMessage> {
         try {
+            this.request = request
+            this.template = template
+            this.templateData = request.templateData
             // validate send-email parameters / inputs
             this.validateEmailConfig()
             this.validateEmailRequestParams()
@@ -103,7 +109,7 @@ class Email {
                 html   : this.template.html ? this.template.html(this.templateData) : ""  // html body
             });
             return getResMessage("success", {
-                message: this.request.requestName? this.request.successMessage ? `${this.request.requestName}: ${this.request.successMessage}` :
+                message: this.request.requestName ? this.request.successMessage ? `${this.request.requestName}: ${this.request.successMessage}` :
                     `${this.request.requestName}: Requested Email sent to your registered email. Check you email for details.` :
                     "Requested Email sent to your registered email. Check you email for details.",
                 value  : result,
@@ -116,8 +122,8 @@ class Email {
     }
 }
 
-function newEmail(config: EmailConfigType, request: EmailRequestType, template: EmailTemplateType) {
-    return new Email(config, request, template)
+function newEmail(config: EmailConfigType) {
+    return new Email(config)
 }
 
 export { Email, newEmail }

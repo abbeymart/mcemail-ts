@@ -13,24 +13,27 @@ export interface EmailConfigType {
     password: string;
     port: number;
     serverUrl: string;
+    msgFrom: string;
 }
 
 export interface EmailPropsType {
-    [key: string]: string;
+    [key: string]: string | number | Date;
 }
 
 export type EmailSubjectFunc = (props: EmailPropsType) => string;
 
 export type EmailFunc = (props: EmailPropsType) => string | Buffer | Readable | AttachmentLike | undefined;
 
+export interface TemplateDataType {
+    [key: string]: string | number | Date;
+}
+
 export interface EmailRequestType {
-    fromEmail: string;
     toEmail: string;
     requestName?: string;
     successMessage?: string;
-    templateData: {
-        [key: string]: string;
-    }
+    templateData: TemplateDataType;
+    fromEmail?: string;
 }
 
 export interface EmailTemplateType {
