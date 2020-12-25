@@ -21,32 +21,34 @@ import {
 import { ResponseMessage } from "@mconnect/mcresponse";
 import { EmailConfigType, EmailRequestType, EmailTemplateType } from "../src/types";
 import { emailPass, emailServer, emailUser, emailPort } from "./config/emailConfig";
-import {verifySubject, verifyContentText, verifyContent} from "./templates";
+import { verifySubject, verifyContentText, verifyContent } from "./templates";
 
 const serverConfig: EmailConfigType = {
     username : emailUser,
     password : emailPass,
     serverUrl: emailServer,
     port     : Number(emailPort),
+    msgFrom  : "",
 };
 
 const requestInfo: EmailRequestType = {
-  fromEmail: "",
-  toEmail: "",
+    fromEmail   : "",
+    toEmail     : "",
+    templateData: {},
 };
 
-const emailTemp: EmailTemplateType ={
+const emailTemp: EmailTemplateType = {
     subject: verifySubject,
-    text: verifyContentText,
-    html: verifyContent,
+    text   : verifyContentText,
+    html   : verifyContent,
 };
 
 (async () => {
     await mcTest({
         name    : "should send and return valid response for verification",
         testFunc: async () => {
-            const mail = newEmail(serverConfig, requestInfo, emailTemp, {})
-            const mailRes: ResponseMessage = await mail.sendEmail();
+            const mail = newEmail(serverConfig)
+            const mailRes: ResponseMessage = await mail.sendEmail(requestInfo, emailTemp);
             if (mailRes.code === 'success') {
                 assertEquals(mailRes.code, verifyRes.code);
                 assertEquals(mailRes.message, verifyRes.message);
