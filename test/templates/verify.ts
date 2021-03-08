@@ -5,13 +5,13 @@
  * @Description: mc-central-ts: verify-account email templates
  */
 
-import { AuthEmailProp } from "../../src/types";
+import { EmailPropsType } from "../../src";
 
-export const verifySubject= (props: AuthEmailProp) => {
+export const verifySubject = (props: EmailPropsType) => {
     return `Hi ${props.name ? props.name : ''}, Welcome to mConnect | Verify ${props.taskSubject || "Email & Access Information"}`;
 };
 
-export const verifyContentText= (props: AuthEmailProp) => {
+export const verifyContentText= (props: EmailPropsType) => {
     return `
         Hi ${props.name},
         
@@ -30,7 +30,7 @@ export const verifyContentText= (props: AuthEmailProp) => {
     `;
 };
 
-export const verifyContent= (props: AuthEmailProp)=> {
+export const verifyContentHtml= (props: EmailPropsType)=> {
     return `
         <div class="w3-container">
             <p>Hi ${props.name},</p>

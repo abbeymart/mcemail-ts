@@ -5,13 +5,13 @@
  * @Description: mc-central-ts: set-password email templates
  */
 
-import { AuthEmailProp } from "../../src/types";
+import { EmailPropsType } from "../../src";
 
-export const setPassSubject = (props: AuthEmailProp) => {
+export const setPassSubject = (props: EmailPropsType) => {
     return `Hi ${props.name? props.name : ''}, mConnect | Password Reset Successfully`;
 };
 
-export const setPassContentText = (props: AuthEmailProp) => {
+export const setPassContentText = (props: EmailPropsType) => {
     return `
         Hi ${props.name},
         
@@ -27,7 +27,7 @@ export const setPassContentText = (props: AuthEmailProp) => {
     `;
 };
 
-export const setPassContent = (props: AuthEmailProp) => {
+export const setPassContentHtml = (props: EmailPropsType) => {
     return `
         <div class="w3-container">
             <p>Hi ${props.name},</p>

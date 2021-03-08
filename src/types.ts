@@ -29,7 +29,7 @@ export interface TemplateDataType {
 }
 
 export interface EmailRequestType {
-    toEmail: string;
+    toEmail: Array<string>;
     requestName?: string;
     successMessage?: string;
     templateData: TemplateDataType;

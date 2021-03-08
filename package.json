@@ -1,6 +1,6 @@
 {
   "name": "@mconnect/mcmail",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "mConnect Send Email / Messages Package",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",

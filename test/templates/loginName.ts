@@ -5,13 +5,13 @@
  * @Description: mc-central-ts: login-name email templates
  */
 
-import { AuthEmailProp } from "../../src/types";
+import { EmailPropsType } from "../../src";
 
-export const loginNameSubject = (props: AuthEmailProp) => {
+export const loginNameSubject = (props: EmailPropsType) => {
     return `Hi ${props.name? props.name : ''}, mConnect | Login Name Request`;
 };
 
-export const loginNameContentText = (props: AuthEmailProp) => {
+export const loginNameContentText = (props: EmailPropsType) => {
     return `
         Hi ${props.name},
         
@@ -30,7 +30,7 @@ export const loginNameContentText = (props: AuthEmailProp) => {
     `;
 };
 
-export const loginNameContent = (props: AuthEmailProp) => {
+export const loginNameContentHtml = (props: EmailPropsType) => {
     return `
         <div class="w3-container">
             <p>Hi ${props.name},</p>

@@ -5,13 +5,13 @@
  * @Description: mc-central-ts: change-password email templates
  */
 
-import { AuthEmailProp } from "../../src/types";
+import { EmailPropsType } from "../../src";
 
-export const changeTaskSubject = (props: AuthEmailProp) => {
+export const changeTaskSubject = (props: EmailPropsType) => {
     return `Hi ${props.name ? props.name : ''}, mConnect | ${props.taskSubject || 'Task Completed' }`;
 };
 
-export const changeTaskContentText = (props: AuthEmailProp) => {
+export const changeTaskContentText = (props: EmailPropsType) => {
     return `
         Hi ${props.name},
         
@@ -27,7 +27,7 @@ export const changeTaskContentText = (props: AuthEmailProp) => {
     `;
 };
 
-export const changeTaskContent = (props: AuthEmailProp) => {
+export const changeTaskContentHtml = (props: EmailPropsType) => {
     return `
         <div class="w3-container">
             <p>Hi ${props.name},</p>

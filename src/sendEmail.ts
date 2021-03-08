@@ -27,8 +27,8 @@ class Email {
         this.emailPort = config.port
         this.serverUrl = config.serverUrl
         this.msgFrom = config.msgFrom
-        this.request = {fromEmail: "", toEmail: "", successMessage: "", requestName: "", templateData: {}}
-        this.template = {text: ({})=> "", subject: ({})=> ""}
+        this.request = {fromEmail: "", toEmail: [], successMessage: "", requestName: "", templateData: {}}
+        this.template = {text: ({}) => "", subject: ({}) => ""}
         this.templateData = {}
     }
 
@@ -61,10 +61,12 @@ class Email {
     }
 
     activateMailServer() {
+        // environment:
+        const sysEnv = process.env.MC_ACCESS_ENV || "development";
         this.transporter = nodemailer.createTransport({
             host          : this.serverUrl,
             port          : this.emailPort,
-            secure        : true, // use TLS
+            secure        : sysEnv !== "development" ? true : false, // use TLS for TEST/PROD deployment
             auth          : {
                 user: this.emailUser,
                 pass: this.emailPassword,
@@ -103,7 +105,7 @@ class Email {
             // send email
             const result = await this.transporter?.sendMail({
                 from   : `${this.request.fromEmail}`, // sender address
-                to     : `${this.request.toEmail}`, // list of receivers
+                to     : this.request.toEmail, // list of receivers
                 subject: this.template.subject(this.templateData), // Subject line
                 text   : this.template.text(this.templateData), // plain text body
                 html   : this.template.html ? this.template.html(this.templateData) : ""  // html body

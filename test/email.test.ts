@@ -17,30 +17,35 @@ import {
     setPasswordData, setPassRes, setPassError,
     verifyUserRequestData, verifyUserReqRes, verifyUserReqError,
     defaultError,
-} from "./testData";
+} from "./config/testData";
 import { ResponseMessage } from "@mconnect/mcresponse";
 import { EmailConfigType, EmailRequestType, EmailTemplateType } from "../src/types";
-import { emailPass, emailServer, emailUser, emailPort } from "./config/emailConfig";
-import { verifySubject, verifyContentText, verifyContent } from "./templates";
+import { contactInfo, emailConfig, toEmailAddress } from "./config/emailConfig";
+import { verifySubject, verifyContentText, verifyContentHtml } from "./templates";
 
 const serverConfig: EmailConfigType = {
-    username : emailUser,
-    password : emailPass,
-    serverUrl: emailServer,
-    port     : Number(emailPort),
-    msgFrom  : "",
+    username : emailConfig.username,
+    password : emailConfig.password,
+    serverUrl: emailConfig.serverUrl,
+    port     : emailConfig.port,
+    msgFrom  : emailConfig.msgFrom,
 };
 
 const requestInfo: EmailRequestType = {
-    fromEmail   : "",
-    toEmail     : "",
-    templateData: {},
+    fromEmail   : emailConfig.msgFrom,
+    toEmail     : toEmailAddress,
+    templateData: {
+        name       : "Abbey",
+        verifyLink : "http://localhost:8080/verify",
+        contactInfo: contactInfo,
+        taskSubject: "Verify Registered Account",
+    },
 };
 
 const emailTemp: EmailTemplateType = {
     subject: verifySubject,
     text   : verifyContentText,
-    html   : verifyContent,
+    html   : verifyContentHtml,
 };
 
 (async () => {
@@ -48,7 +53,8 @@ const emailTemp: EmailTemplateType = {
         name    : "should send and return valid response for verification",
         testFunc: async () => {
             const mail = newEmail(serverConfig)
-            const mailRes: ResponseMessage = await mail.sendEmail(requestInfo, emailTemp);
+            const mailRes = await mail.sendEmail(requestInfo, emailTemp);
+            console.log("mail-response: ", mailRes)
             if (mailRes.code === 'success') {
                 assertEquals(mailRes.code, verifyRes.code);
                 assertEquals(mailRes.message, verifyRes.message);
