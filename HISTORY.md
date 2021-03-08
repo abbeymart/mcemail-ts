@@ -3,7 +3,7 @@
 ## Version 0.3.0
 
 - Release date: Mar 08, 2020
-- Refactored, test, build and publish
+- Refactored send-method, test, build and publish
 
 ## Version 0.2.0
 
