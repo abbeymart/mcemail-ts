@@ -1,5 +1,10 @@
 # Historical logs
 
+## Version 0.3.1
+
+- Release date: June 06, 2021
+- updated mcresponse to v0.4.1
+
 ## Version 0.3.0
 
 - Release date: Mar 08, 2020
