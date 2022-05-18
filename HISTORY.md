@@ -1,5 +1,10 @@
 # Historical logs
 
+## Version 0.4.0
+
+- Release date: May 18, 2022
+- updated-deps-and-refactored-functions
+
 ## Version 0.3.1
 
 - Release date: June 06, 2021

@@ -15,6 +15,7 @@ src/config
 test/config
 src/config/secure
 test/config/secure
+*.txt
 
 # test report
 #mochawesome-report

@@ -66,7 +66,7 @@ class Email {
         this.transporter = nodemailer.createTransport({
             host          : this.serverUrl,
             port          : this.emailPort,
-            secure        : sysEnv !== "development" ? true : false, // use TLS for TEST/PROD deployment
+            secure        : sysEnv !== "development", // use TLS for TEST/PROD deployment
             auth          : {
                 user: this.emailUser,
                 pass: this.emailPassword,
@@ -111,8 +111,8 @@ class Email {
                 html   : this.template.html ? this.template.html(this.templateData) : ""  // html body
             });
             return getResMessage("success", {
-                message: this.request.requestName ? this.request.successMessage ? `${this.request.requestName}: ${this.request.successMessage}` :
-                    `${this.request.requestName}: Requested Email sent to your registered email. Check you email for details.` :
+                message: this.request.requestName ? (this.request.successMessage ? `${this.request.requestName}: ${this.request.successMessage}` :
+                    `${this.request.requestName}: Requested Email sent to your registered email. Check you email for details.`) :
                     "Requested Email sent to your registered email. Check you email for details.",
                 value  : result,
             });

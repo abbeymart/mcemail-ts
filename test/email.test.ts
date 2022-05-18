@@ -6,20 +6,9 @@
  */
 
 import { assertEquals, mcTest, postTestResult } from '@mconnect/mctest';
-import { Email, newEmail } from "../src";
+import { newEmail } from "../src";
 
-// test data import
-import {
-    verifyData, verifyRes, verifyError,
-    changePasswordData, changePassRes, changePassError,
-    getLoginNameData, getLoginNameRes, getLoginNameError,
-    resetPasswordRequestData, resetPassRes, resetPassError,
-    setPasswordData, setPassRes, setPassError,
-    verifyUserRequestData, verifyUserReqRes, verifyUserReqError,
-    defaultError,
-} from "./config/testData";
-import { ResponseMessage } from "@mconnect/mcresponse";
-import { EmailConfigType, EmailRequestType, EmailTemplateType } from "../src/types";
+import { EmailConfigType, EmailRequestType, EmailTemplateType } from "../src";
 import { contactInfo, emailConfig, toEmailAddress } from "./config/emailConfig";
 import { verifySubject, verifyContentText, verifyContentHtml } from "./templates";
 
@@ -34,6 +23,8 @@ const serverConfig: EmailConfigType = {
 const requestInfo: EmailRequestType = {
     fromEmail   : emailConfig.msgFrom,
     toEmail     : toEmailAddress,
+    successMessage: "success",
+    requestName: "Guest User",
     templateData: {
         name       : "Abbey",
         verifyLink : "http://localhost:8080/verify",
@@ -48,6 +39,16 @@ const emailTemp: EmailTemplateType = {
     html   : verifyContentHtml,
 };
 
+const verifyRes = {
+    code: "success",
+    resMessage: "Requested Email sent to your registered email",
+    message: "success",
+};
+const verifyError = {
+    code: "emailError",
+    message: "",
+};
+
 (async () => {
     await mcTest({
         name    : "should send and return valid response for verification",
@@ -57,7 +58,7 @@ const emailTemp: EmailTemplateType = {
             console.log("mail-response: ", mailRes)
             if (mailRes.code === 'success') {
                 assertEquals(mailRes.code, verifyRes.code);
-                assertEquals(mailRes.message, verifyRes.message);
+                assertEquals(mailRes.message.includes(verifyRes.message), true);
             } else {
                 assertEquals(mailRes.code, verifyError.code);
             }
